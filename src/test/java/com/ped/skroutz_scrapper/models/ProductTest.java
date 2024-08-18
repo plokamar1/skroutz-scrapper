@@ -2,6 +2,11 @@ package com.ped.skroutz_scrapper.models;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.HashSet;
+import java.util.Set;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,13 +14,26 @@ import org.junit.jupiter.api.Test;
 public class ProductTest {
 
     Product product;
+    Category category;
 
     @BeforeEach
-    public void setup() {
+    public void setup() throws MalformedURLException {
+        URL categoryUrl = new URL("https://localhost.com");
+        category = Category.builder()
+                .title("A product Category")
+                .link(categoryUrl)
+                .build();
+
+        Set<Category> categories = new HashSet<>();
+        categories.add(category);
+
+        URL productUrl = new URL("https://localhost.com/product");
 
         product = Product.builder()
                 .title("Huawei Mobile Phone")
                 .price(256.45)
+                .categories(categories)
+                .link(productUrl)
                 .platformIdentifier("platformIdentifier")
                 .build();
     }
@@ -34,7 +52,6 @@ public class ProductTest {
     void testGetPlatformIdentifier() {
         String platformIdentifier = product.getPlatformIdentifier();
 
-        assertThat(platformIdentifier).isAlphanumeric();
         assertEquals(platformIdentifier, "platformIdentifier");
     }
 
@@ -42,7 +59,6 @@ public class ProductTest {
     void testGetPrice() {
         Double price = product.getPrice();
 
-        assertThat(price).isInstanceOf(Double.class);
         assertEquals(price, 256.45);
     }
 
@@ -50,7 +66,6 @@ public class ProductTest {
     void testGetTitle() {
         String title = product.getTitle();
 
-        assertThat(title).isInstanceOf(String.class);
         assertEquals(title, "Huawei Mobile Phone");
     }
 
@@ -70,7 +85,6 @@ public class ProductTest {
 
         String platformIdentifier = product.getPlatformIdentifier();
 
-        assertThat(platformIdentifier).isInstanceOf(String.class);
         assertEquals(platformIdentifier, "aNewPlatformIdentifier");
     }
 
@@ -80,7 +94,6 @@ public class ProductTest {
 
         Double price = product.getPrice();
 
-        assertThat(price).isInstanceOf(Double.class);
         assertEquals(price, 522.50);
     }
 
@@ -90,7 +103,6 @@ public class ProductTest {
 
         String title = product.getTitle();
 
-        assertThat(title).isInstanceOf(String.class);
         assertEquals(title, "A new Title");
     }
 
@@ -99,5 +111,31 @@ public class ProductTest {
         String productToString = product.toString();
 
         assertThat(productToString).isInstanceOf(String.class);
+    }
+
+    @Test
+    void testGetCategories() {
+        Set<Category> categories = product.getCategories();
+
+        assertThat(categories.size()).isEqualTo(1);
+        assertThat(categories.iterator().next()).isInstanceOf(Category.class);
+        assertThat(categories.iterator().next()).isEqualTo(category);
+    }
+
+    @Test
+    void testGetLink() {
+        URL productUrl = product.getLink();
+
+        assertThat(productUrl.toString()).isEqualTo("https://localhost.com/product");
+    }
+
+    @Test
+    void testSetCategories() {
+
+    }
+
+    @Test
+    void testSetLink() {
+
     }
 }
