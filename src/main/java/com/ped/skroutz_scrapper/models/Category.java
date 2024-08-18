@@ -1,8 +1,8 @@
 package com.ped.skroutz_scrapper.models;
 
+import java.net.URL;
+import java.util.HashSet;
 import java.util.Set;
-
-import com.github.dockerjava.api.model.Link;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -26,9 +26,9 @@ public class Category {
     private long platformIdentifier;
 
     @Column(nullable = false)
-    private Link link;
+    private URL link;
 
     @ManyToMany(mappedBy = "categories")
-    private Set<Product> products = null;
+    private Set<Product> products = new HashSet<>();
 
 }

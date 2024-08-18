@@ -1,8 +1,8 @@
 package com.ped.skroutz_scrapper.models;
 
+import java.net.URL;
+import java.util.HashSet;
 import java.util.Set;
-
-import com.github.dockerjava.api.model.Link;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -29,9 +29,9 @@ public class Product {
     private double price;
 
     @Column(nullable = false)
-    private Link link;
+    private URL link;
 
     @ManyToMany
     @JoinTable(name = "category_product", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
-    private Set<Category> categories = null;
+    private Set<Category> categories = new HashSet<>();
 }
