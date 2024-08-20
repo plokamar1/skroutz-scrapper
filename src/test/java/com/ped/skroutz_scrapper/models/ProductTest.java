@@ -1,7 +1,5 @@
 package com.ped.skroutz_scrapper.models;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashSet;
