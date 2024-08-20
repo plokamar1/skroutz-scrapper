@@ -44,8 +44,7 @@ public class Product {
         for (Iterator<Category> it = categories.iterator(); it.hasNext();) {
             Category c = it.next();
             if (c.getId() == _categoryId) {
-                categories.remove(c);
-                return true;
+                return categories.remove(c);
             }
         }
         return false;
